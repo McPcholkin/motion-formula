@@ -1,0 +1,32 @@
+# Config for camera {{ cam_name }}
+
+# Camera device
+videodevice {{ videodevice }}
+
+# Camera text
+text_left {{ text_left }}
+
+# Camera rotation
+rotate {{ rotate }}
+
+# Camera resolution
+width {{ width }}
+height {{ height }}
+
+# Camera framerate
+framerate {{ framerate }}
+
+# Storage location
+target_dir {{ target_dir }}
+
+# Camera stream port
+stream_port {{ stream_port }}
+
+# Set mask file to prevent false alarms
+{% if mask_file %}
+mask_file {{ mask_file }}
+{% endif %}
+
+# Set autobrightness
+auto_brightness {{ auto_brightness }}
+

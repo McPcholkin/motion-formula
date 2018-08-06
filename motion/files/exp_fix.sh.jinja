@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Fix exposition for device {{ cam_name }}
+
+v4l2-ctl --set-ctrl=power_line_frequency={{ exp_fix_power_freq }} --set-ctrl=gamma={{ exp_fix_gamma }} -d {{ cam_dev }}
