@@ -38,7 +38,7 @@ motion:
         framerate: 2
         target_dir: '/srv/motion/cam2'
         stream_port: 8082
-        mask_file: /etc/motion/cam2_mask.pgm
+        mask_file: /etc/motion/mask/cam2_mask.pgm
         base64_mask_file: |
           UDUKIyBDUkVBVE9SOiBHSU1QIFBOTSBGaWx0ZXIgVmVyc2lvbiAxLjEKNjQwIDQ4MAoyNTUKAAAA
           AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA

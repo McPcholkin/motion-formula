@@ -39,6 +39,12 @@ make_cameras_conf_dir:
     - require_in:
       - file: main_config
 
+make_mask_dir:
+  file.directory:
+    - name: {{ map.files.mask_dir }}
+    - makedirs: True
+    - require_in:
+      - file: main_config
 
 {% set cams = salt['pillar.get']('motion:cams', False) %}
 {% if cams %}

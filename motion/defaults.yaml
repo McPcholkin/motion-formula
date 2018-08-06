@@ -6,6 +6,7 @@ motion:
   files:
     main_config: '/etc/motion/motion.conf'
     exp_fix_dir: '/etc/motion/exp_fix'
+    mask_dir: '/etc/motion/mask'
     daemon_default: '/etc/default/motion'
   config:
     # Daemon
