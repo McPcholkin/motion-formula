@@ -35,6 +35,8 @@ motion:
         rotate: 0
         width: 640
         height: 480
+        output_pictures: 'off'
+        ffmpeg_output_movies: 'off'
         framerate: 2
         target_dir: '/srv/motion/cam2'
         stream_port: 8082

@@ -60,7 +60,15 @@ config_for_camera_{{ cam }}:
       - service: motion_service
     - context:
       cam_name: {{ cam }}
+      ipcam: {{ salt['pillar.get']('motion:cams:'~cam~':ipcam', map.config.ipcam ) }}
       videodevice: {{ salt['pillar.get']('motion:cams:'~cam~':videodevice', '/dev/video'~loop.index ) }}
+      v4l2_palette: {{ salt['pillar.get']('motion:cams:'~cam~':v4l2_palette', '/dev/video'~loop.index ) }}
+      output_pictures: '{{ salt['pillar.get']('motion:cams:'~cam~':output_pictures', map.config.output_pictures ) }}'
+      ffmpeg_output_movies: '{{ salt['pillar.get']('motion:cams:'~cam~':ffmpeg_output_movies', map.config.ffmpeg_output_movies ) }}'
+
+      on_movie_start: {{ salt['pillar.get']('motion:cams:'~cam~':on_movie_start', map.config.on_movie_start ) }}
+      on_movie_end: {{ salt['pillar.get']('motion:cams:'~cam~':on_movie_end', map.config.on_movie_end ) }}
+
       text_left: {{ salt['pillar.get']('motion:cams:'~cam~':text_left', 'CAM-'~loop.index ) }}
       rotate: {{ salt['pillar.get']('motion:cams:'~cam~':rotate', '0' ) }}
       width: {{ salt['pillar.get']('motion:cams:'~cam~':width', map.config.width ) }}

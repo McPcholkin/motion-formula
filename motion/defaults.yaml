@@ -19,6 +19,7 @@ motion:
     log_type: 'all'
     
     # Capture device options
+    ipcam: False
     v4l2_palette: '17'
     power_line_frequency: '-1'
     rotate: 0

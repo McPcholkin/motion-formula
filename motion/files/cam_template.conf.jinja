@@ -1,10 +1,33 @@
 # Config for camera {{ cam_name }}
 
 # Camera device
+{% if ipcam %}
+netcam_url {{ videodevice }}
+{% else %}
 videodevice {{ videodevice }}
+{% endif %}
+
+
+# Set cam output format
+v4l2_palette {{ v4l2_palette }}
 
 # Camera text
 text_left {{ text_left }}
+
+# Output options
+output_pictures {{ output_pictures }}
+
+ffmpeg_output_movies {{ ffmpeg_output_movies }}
+
+# Actions on movie record
+{% if on_movie_start %}
+on_movie_start "{{ on_movie_start }}"
+{% endif %}
+
+{% if on_movie_end %}
+on_movie_end "{{ on_movie_end }}"
+{% endif %}
+
 
 # Camera rotation
 rotate {{ rotate }}
