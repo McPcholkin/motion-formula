@@ -83,24 +83,17 @@ config_for_camera_{{ cam }}:
 {# ------------  temp solution ------------ #}
 {% set pgm_file = salt['pillar.get']('motion:cams:'~cam~':mask_file', False ) %}
 {% if pgm_file %}
-{% if not salt['file.file_exists' ](pgm_file) %} 
 
 create_pgm_mask_for_{{ cam }}:
-  file.managed:
-    - name: /tmp/{{ cam }}_mask.base64
+  file.decode:
+    - name: {{ pgm_file }}
     - contents_pillar: motion:cams:{{ cam }}:base64_mask_file
-
-decode_mask_file_for_{{ cam }}:
-  cmd.run:
-    - name: 'base64 -d /tmp/{{ cam }}_mask.base64 > {{ pgm_file }}'
-    - require:
-      - file: create_pgm_mask_for_{{ cam }}
+    - encoding_type: base64
     - require_in:
       - file: config_for_camera_{{ cam }}
     - watch_in:
       - service: motion_service
 
-{% endif %}
 {% endif %}
 {# -------------------------------------- #}
 
