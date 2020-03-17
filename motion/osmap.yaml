@@ -11,18 +11,18 @@
 # osmap: {}
 ---
 # os_family: Debian
-Ubuntu:
-  pkg:
-    name: TEMPLATE-ubuntu
-  config: /etc/TEMPLATE.d/custom-ubuntu.conf
+Ubuntu: {}
+#  pkg:
+#    name: TEMPLATE-ubuntu
+#  config: /etc/TEMPLATE.d/custom-ubuntu.conf
 Raspbian: {}
 
 # os_family: RedHat
-Fedora:
-  pkg:
-    name: TEMPLATE-fedora
-  service:
-    name: service-fedora
+Fedora: {}
+#  pkg:
+#    name: TEMPLATE-fedora
+#  service:
+#    name: service-fedora
 CentOS: {}
 Amazon: {}
 
