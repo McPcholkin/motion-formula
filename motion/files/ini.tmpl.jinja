@@ -1,0 +1,26 @@
+{%- macro set_config(config, spacer=' ') -%}
+{% for parameter in config | sort -%}
+{% if parameter not in exclude -%}
+{% set value = config.get(parameter) -%}
+{% if value is mapping -%}
+{{ set_config(value) }}
+{%- elif value is sequence and value is not string -%}
+{% for item in value -%}
+{{ parameter }}{{ spacer }}{{ item }}
+{% endfor -%}
+{%- elif value is not none -%}
+{{ parameter }}{{ spacer }}{{ value }}
+{% endif -%}
+{% endif -%}
+{% endfor -%}
+{% endmacro -%}
+
+#####################################################
+# File managed by Salt at <{{ source }}>.
+# Your changes will be overwritten.
+# Based on config file by motion 4.1.1
+#####################################################
+
+{% if config -%}
+{{ set_config(config, spaser) }}
+{% endif -%}

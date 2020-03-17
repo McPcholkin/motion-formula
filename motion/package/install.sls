@@ -3,8 +3,8 @@
 
 {#- Get the `tplroot` from `tpldir` #}
 {%- set tplroot = tpldir.split('/')[0] %}
-{%- from tplroot ~ "/map.jinja" import TEMPLATE with context %}
+{%- from tplroot ~ "/map.jinja" import motion with context %}
 
-TEMPLATE-package-install-pkg-installed:
+motion-package-install-pkg-installed:
   pkg.installed:
-    - name: {{ TEMPLATE.pkg.name }}
+    - pkgs: {{ motion.pkg.name }}
