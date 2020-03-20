@@ -49,7 +49,7 @@ motion:
     #netcam_proxy: 'value'
     netcam_tolerant_check: 'off'
     rtsp_uses_tcp: 'on'
-   auto_brightness: 'off'
+    auto_brightness: 'off'
     brightness: '0'
     contrast: '0'
     saturation: '0'
