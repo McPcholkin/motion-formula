@@ -17,59 +17,78 @@ include:
 {% for camera in motion.cameras.items() %}
 
 
-{# Check if all parameters are present #}
+{# Check exposition parameters are present #}
 {% if 'exposition' in camera.1 %}
-{% if 'day' in camera.1.exposition %}
-{% if 'night' in camera.1.exposition %}
-{% if 'power_line_frequency' in camera.1.exposition.day %}
-{% if 'power_line_frequency' in camera.1.exposition.night %}
-{% if 'gamma' in camera.1.exposition.day %}
-{% if 'gamma' in camera.1.exposition.night %}
-{% if 'time' in camera.1.exposition.day %}
-{% if 'time' in camera.1.exposition.night %}
-{% if 'hour' in camera.1.exposition.day.time %}
-{% if 'hour' in camera.1.exposition.night.time %}
-{% if 'minute' in camera.1.exposition.day.time %}
-{% if 'minute' in camera.1.exposition.night.time %}
+
+{% for job in camera.1.exposition.items() %}
+
+{% if 'time' in job.1 %}
+{% if 'hour' in job.1.time %}
+{% if 'minute' in job.1.time %}
+
+{# Trick to update variable in loop
+ # https://stackoverflow.com/questions/46939756/setting-variable-in-jinja-for-loop-doesnt-persist-between-iterations 
+ # #}
+{% set ns = namespace(job_parameters='v4l2-ctl -d ' ~ camera.1.config.videodevice ~ ' ') %}
+
+{# get all parameters for job #}
+{% for param, value in job.1.config.items() %}
+
+{# concatenation string with parameters and values #}
+{% set ns.job_parameters = ns.job_parameters ~ '--set-ctrl=' ~ param ~ '=' ~ value ~ ' ' %}
+
+{# for param, value in job.1.config.items() #}
+{% endfor %}
 
 
-motion-{{ camera.0 }}-exposition-day-cron-present:
+motion-{{ camera.0 }}-exposition-{{ job.0 }}-cron-present:
   cron.present:
-    - name: "v4l2-ctl --set-ctrl=power_line_frequency={{  camera.1.exposition.day.power_line_frequency }} --set-ctrl=gamma={{ camera.1.exposition.day.gamma }} -d {{ camera.1.config.videodevice }}"
-    - identifier: "motion-{{ camera.0 }}-exposition-day"
+    - name: "{{ ns.job_parameters }}"
+    - identifier: "motion-{{ camera.0 }}-exposition-{{ job.0 }}"
     - user: root
-    - hour: {{ camera.1.exposition.day.time.hour }}
-    - minute: {{ camera.1.exposition.day.time.minute }}
+    - hour: {{ job.1.time.hour }}
+    - minute: {{ job.1.time.minute }}
 
 
-motion-{{ camera.0 }}-exposition-night-cron-present:
-  cron.present:
-    - name: "v4l2-ctl --set-ctrl=power_line_frequency={{  camera.1.exposition.night.power_line_frequency }} --set-ctrl=gamma={{ camera.1.exposition.night.gamma }} -d {{ camera.1.config.videodevice }}"
-    - identifier: "motion-{{ camera.0 }}-exposition-night"
-    - user: root
-    - hour: {{ camera.1.exposition.night.time.hour }}
-    - minute: {{ camera.1.exposition.night.time.minute }}
+{# if 'minute' in job.1.time #}
+{% else %}
 
-
+WARNING-motion-{{ camera.0 }}-exposition-{{ job.0 }}-test-show_notification:
+  test.show_notification:
+    - name: "WARNING cron job for {{ camera.0 }} exposition {{ job.0 }} cannot be created"
+    - text: "minute - parameter not defined in pillar!"
 
 {% endif %}
-{% endif %}
-{% endif %}
-{% endif %}
-{% endif %}
-{% endif %}
-{% endif %}
-{% endif %}
-{% endif %}
-{% endif %}
-{% endif %}
-{% endif %}
+
+{# if 'hour' in job.1.time #}
+{% else %}
+
+WARNING-motion-{{ camera.0 }}-exposition-{{ job.0 }}-test-show_notification:
+  test.show_notification:
+    - name: "WARNING cron job for {{ camera.0 }} exposition {{ job.0 }} cannot be created"
+    - text: "hour - parameter not defined in pillar!"
+
 {% endif %}
 
+{# if 'time' in job.1 #}
+{% else %}
 
+WARNING-motion-{{ camera.0 }}-exposition-{{ job.0 }}-test-show_notification:
+  test.show_notification:
+    - name: "WARNING cron job for {{ camera.0 }} exposition {{ job.0 }} cannot be created"
+    - text: "time - parameter not defined in pillar!"
+
+{% endif %}
+
+{# for job in camera.1.exposition.items() #}
+{% endfor %}
+
+
+{# if 'exposition' in camera.1 #}
+{% endif %}
+
+{# if motion.cameras #}
 {% endfor %}
 {% endif %}
-
-
 
 

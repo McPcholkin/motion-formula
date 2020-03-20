@@ -17,7 +17,7 @@ motion:
         target_dir: '/srv/motion/cam_1'
         stream_port: 8081
 
-  ###########################################
+  ###########################################################################
 
 
   # Multiple cameras setup, 2 webcams + IP camera
@@ -42,22 +42,40 @@ motion:
       # Some old webcams have problems with exposition 
       # in different light conditions, to compensate this 
       # and get best picture as possible use this parameters 
-      # to set time enad expositions settings for day and night
-      # Parameters need tune by hands to find best for 
-      # specific camera.
+      # to set time end expositions settings for day, night 
+      # or any time you want (you can add many time periods)
+      #
+      # Parameters need tune by hands to find best for specific camera.
+      #
+      # Get all supported parameters for camera
+      # #: v4l2-ctl -l -d /dev/v4l/by-id/usb***
+      #
+      # Read parameters
+      # #: v4l2-ctl -d /dev/v4l/by-id/usb*** --get-ctrl=power_line_frequency --get-ctrl=gamma
+      #
+      # Set parameters
+      # #: v4l2-ctl -d /dev/v4l/by-id/usb*** --set-ctrl=power_line_frequency=1 --set-ctrl=gamma=3
       exposition:
         day:
-          power_line_frequency: 0
-          gamma: 1
+          config:
+            power_line_frequency: 0
+            gamma: 1
           time:
             hour: 6
             minute: 1
         night:
-          power_line_frequency: 1
-          gamma: 2
+          config:
+            power_line_frequency: 1
+            gamma: 2
           time:
             hour: 19
             minute: 30
+        any_other_time:
+          config:
+             power_line_frequency: 0
+          time:
+            hour: 22
+            minute: 5
 
     # IP camera, need setup before connect
     Dahua_C35:
@@ -130,6 +148,27 @@ motion:
 
 ####################################################################################### 
 
+# Telegram script
+#
+# You can send photos to telegram chat using simple script + on_picture_save parameter
+#
+# How to create telegram bot and get %%__TOKEN__%%
+# https://core.telegram.org/bots
+#
+# To quick get chat ID add bot to chat or send message to bot and run
+# wget -qO- https://api.telegram.org/bot%%__TOKEN__%%/getUpdates
+# 
+# Minimal setup:
+motion:
+  config:
+    on_picture_save: '/etc/motion/scripts/telegram.py %f "CAM: %t, Event: %v"'
+  telegram:
+    config:
+      token: '99999999:KJNkjnksdkjsKJDNnskjndvkJSKJDNkjDSj'
+      chat_id: '-999999999'
+
+
+#######################################################################################
 
 # Full list of pillar variables
 motion:

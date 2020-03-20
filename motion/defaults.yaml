@@ -6,7 +6,6 @@ motion:
     name: 
       - 'motion'
       - 'v4l-utils'
-
   service:
     name: 'motion'
     user: 'motion'
@@ -18,13 +17,14 @@ motion:
     examples: '/usr/share/motion/examples'
   
   cameras: False
- 
-  uvcdynctrl:
-    pkg:
-      name:
-        - 'uvcdynctrl'
+
+  telegram:
     config:
-      turn_step: '100'
+      token: False
+      chat_id: False
+      url:
+        base: 'https://api.telegram.org/bot'
+        send_photo: '/sendPhoto'
 
   config:
     daemon: 'on'

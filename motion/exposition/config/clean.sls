@@ -10,20 +10,27 @@
 {% for camera in motion.cameras.items() %}
 
 
-motion-{{ camera.0 }}-exposition-day-cron-absent:
+{# Check exposition parameters are present #}
+{% if 'exposition' in camera.1 %}
+
+{% for job in camera.1.exposition.items() %}
+
+
+motion-{{ camera.0 }}-exposition-{{ job.0 }}-cron-absent:
   cron.absent:
-    - identifier: "motion-{{ camera.0 }}-exposition-day"
+    - identifier: "motion-{{ camera.0 }}-exposition-{{ job.0 }}"
     - user: root
 
-motion-{{ camera.0 }}-exposition-night-cron-absent:
-  cron.absent:
-    - identifier: "motion-{{ camera.0 }}-exposition-night"
-    - user: root
 
-
+{# for job in camera.1.exposition.items() #}
 {% endfor %}
+
+
+{# if 'exposition' in camera.1 #}
 {% endif %}
 
-
+{# if motion.cameras #}
+{% endfor %}
+{% endif %}
 
 

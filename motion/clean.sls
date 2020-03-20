@@ -3,7 +3,7 @@
 
 include:
   - .exposition.clean
-  - .uvcdynctrl.clean
+  - .telegram.clean
   - .service.clean
   - .config.clean
   - .package.clean

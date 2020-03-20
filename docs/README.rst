@@ -84,7 +84,7 @@ Available states
 *Meta-state (This is a state that includes other states)*.
 
 This installs the motion package,
-manages the motion configuration file and then
+manages the motion configuration file, manage exposition fix, manage telegram script and then
 starts the associated motion service.
 
 ``motion.package``
@@ -111,7 +111,7 @@ via include list.
 
 this state will undo everything performed in the ``motion`` meta-state in reverse order, i.e.
 stops the service,
-removes the configuration file and
+removes the configuration file, cleanup cron, delete mask files, delete telegram script, restore stock config and
 then uninstalls the package.
 
 ``motion.service.clean``
@@ -149,7 +149,28 @@ dependency on ``motion.package`` via include list.
 
 This state will remove the cron jobs of the motion exposition.
 
-NOT DONE       Testing
+``motion.telegram``
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+*Meta-state (This is a state that includes other states)*.
+
+This state create python script for send photos on camera action.
+
+``motion.telegram.config``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state create python script for send photos on camera action.
+
+``motion.telegram.config.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state will remove the telegram python script.
+
+
+NOT DONE YET
+============
+
+Testing
 -------
 
 Linux testing is done with ``kitchen-salt``.

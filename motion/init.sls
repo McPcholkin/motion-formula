@@ -6,3 +6,4 @@ include:
   - .config
   - .service
   - .exposition
+  - .telegram

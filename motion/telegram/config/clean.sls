@@ -6,9 +6,7 @@
 {%- set sls_service_clean = tplroot ~ '.service.clean' %}
 {%- from tplroot ~ "/map.jinja" import motion with context %}
 
-motion-uvcdynctrl-wrapper-file-absent:
+motion-telegram-script-file-absent:
   file.absent:
-    - name: "{{ motion.path.config }}/control"
-
-
+    - name: "{{ motion.path.config }}/scripts"
 
