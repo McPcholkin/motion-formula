@@ -6,11 +6,6 @@
 {%- set sls_config_clean = tplroot ~ '.config.clean' %}
 {%- from tplroot ~ "/map.jinja" import motion with context %}
 
-include:
-  - {{ sls_config_clean }}
-
-motion-package-clean-pkg-removed:
+motion-uvcdynctrl-package-clean-pkg-removed:
   pkg.removed:
-    - pkgs: {{ motion.pkg.name }}
-    - require:
-      - sls: {{ sls_config_clean }}
+    - pkgs: {{ motion.uvcdynctrl.pkg.name }}

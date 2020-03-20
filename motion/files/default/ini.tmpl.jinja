@@ -1,5 +1,5 @@
-{%- macro set_config(config, spacer=' ') -%}
-{% for parameter in config | sort -%}
+{%- macro set_config(config, spacer=' ', exclude='DUMMY') -%}
+{% for parameter in config -%}
 {% if parameter not in exclude -%}
 {% set value = config.get(parameter) -%}
 {% if value is mapping -%}
@@ -18,9 +18,8 @@
 #####################################################
 # File managed by Salt at <{{ source }}>.
 # Your changes will be overwritten.
-# Based on config file by motion 4.1.1
 #####################################################
 
 {% if config -%}
-{{ set_config(config, spaser) }}
+{{ set_config(config) }}
 {% endif -%}
