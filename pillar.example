@@ -94,7 +94,8 @@ motion:
 # File in pgm format converted to base64 and storred in reparete sls file
 # to easy modify 
 #
-# How to create mask file see here http://www.lavrsen.dk/foswiki/bin/view/Motion/ConfigOptionMaskFile 
+# How to create mask file see here:
+# http://www.lavrsen.dk/foswiki/bin/view/Motion/ConfigOptionMaskFile 
 # Convert pgm to base64:
 # base64 cam2_mask.pgm > cam2_mask_pgm.base64
    

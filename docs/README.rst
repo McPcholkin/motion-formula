@@ -149,7 +149,7 @@ dependency on ``motion.package`` via include list.
 
 This state will remove the cron jobs of the motion exposition.
 
-NOT NONE       Testing
+NOT DONE       Testing
 -------
 
 Linux testing is done with ``kitchen-salt``.
