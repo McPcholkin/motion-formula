@@ -10,7 +10,5 @@ motion-cameras-mask-clean-file-directory:
    file.directory:
       - name: "{{ motion.path.config }}/mask"           
       - clean: True
-      - require:
-        - sls: {{ sls_service_clean }}
 
 
