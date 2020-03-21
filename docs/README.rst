@@ -143,8 +143,7 @@ This state create mask file from pillar.
 ``motion.mask.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state will remove the mask file and has a depency on
-``motion.service.clean`` via include list.
+This state will remove the mask file.
 
 
 ``motion.exposition``

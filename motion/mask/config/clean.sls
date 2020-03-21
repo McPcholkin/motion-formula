@@ -6,10 +6,6 @@
 {%- set sls_service_clean = tplroot ~ '.service.clean' %}
 {%- from tplroot ~ "/map.jinja" import motion with context %}
 
-include:
-  - {{ sls_service_clean }}
-
-
 motion-cameras-mask-clean-file-directory:
    file.directory:
       - name: "{{ motion.path.config }}/mask"           
