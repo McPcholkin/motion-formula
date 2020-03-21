@@ -84,7 +84,7 @@ Available states
 *Meta-state (This is a state that includes other states)*.
 
 This installs the motion package,
-manages the motion configuration file, manage exposition fix, manage telegram script and then
+manages the motion configuration file, manage exposition fix, manage mask files, manage telegram script and then
 starts the associated motion service.
 
 ``motion.package``
@@ -128,8 +128,24 @@ dependency on ``motion.service.clean`` via include list.
 ``motion.package.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state will remove the motion package and has a depency on
-``motion.config.clean`` via include list.
+``motion.mask``
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+*Meta-state (This is a state that includes other states)*.
+
+This state create mask file from pillar.
+
+``motion.mask.config``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state create mask file from pillar.
+
+``motion.mask.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state will remove the mask file and has a depency on
+``motion.service.clean`` via include list.
+
 
 ``motion.exposition``
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -144,7 +160,7 @@ This state create cron jobs to change camera gamma for day and night.
 This state will configure the motion exposition and has a
 dependency on ``motion.package`` via include list.
 
-``motion.exposition.config.clean``
+``motion.exposition.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will remove the cron jobs of the motion exposition.
@@ -161,7 +177,7 @@ This state create python script for send photos on camera action.
 
 This state create python script for send photos on camera action.
 
-``motion.telegram.config.clean``
+``motion.telegram.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will remove the telegram python script.
