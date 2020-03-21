@@ -7,3 +7,4 @@ include:
   - .service
   - .exposition
   - .telegram
+  - .mask

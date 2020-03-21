@@ -5,5 +5,6 @@ include:
   - .exposition.clean
   - .telegram.clean
   - .service.clean
+  - .mask.clean
   - .config.clean
   - .package.clean

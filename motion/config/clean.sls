@@ -16,13 +16,6 @@ motion-cameras-config-clean-file-directory:
       - require:
         - sls: {{ sls_service_clean }}
 
-motion-cameras-mask-clean-file-directory:
-   file.directory:
-      - name: "{{ motion.path.config }}/mask"           
-      - clean: True
-      - require:
-        - sls: {{ sls_service_clean }}
-
 
 {% set example_config = motion.path.examples~'/motion-dist.conf' %}
 {% if salt['file.file_exists'](example_config) %}

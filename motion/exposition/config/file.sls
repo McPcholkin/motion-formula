@@ -67,6 +67,56 @@ motion-{{ camera.0 }}-target-dir-file-directory:
     - require:
       - sls: {{ sls_package_install }}
 
+{# ############################################### #}
+
+
+{% if 'base64' in camera.1 %}
+
+
+{# create mask file #}
+{% if 'mask_file' in camera.1.config %}
+{% if 'mask_file' in camera.1.base64 %}
+
+motion-{{ camera.0 }}-mask-file-file-decode:
+  file.decode:
+    - name: {{ camera.1.config.mask_file }}
+    - encoded_data: |
+        {{ camera.1.base64.mask_file | indent(8) }}
+    - encoding_type: base64
+    - require:
+      - sls: {{ sls_package_install }}
+    - watch_in:
+      - sls: {{ sls_service_running }}
+
+{% endif %}
+{% endif %}
+
+
+{# create mask privacy file #}
+{% if 'mask_privacy' in camera.1.config %}
+{% if 'mask_privacy' in camera.1.base64 %}
+
+motion-{{ camera.0 }}-mask-privacy-file-decode:
+  file.decode:
+    - name: {{ camera.1.config.mask_privacy }}
+    - encoded_data: |
+        {{ camera.1.base64.mask_privacy | indent(8) }}
+    - encoding_type: base64
+    - require:
+      - sls: {{ sls_package_install }}
+    - watch_in:
+      - sls: {{ sls_service_running }}
+
+{% endif %}
+{% endif %}
+
+
+{% endif %}
+
+
+{# ############################################### #}
+
+
 
 {% endfor %}
 {% endif %}
