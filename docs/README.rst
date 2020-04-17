@@ -170,6 +170,7 @@ This state will remove the cron jobs of the motion exposition.
 *Meta-state (This is a state that includes other states)*.
 
 This state create python script for send photos on camera action.
+Also bot can ignore camera action based on known device list.
 
 ``motion.telegram.config``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
