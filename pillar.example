@@ -161,11 +161,28 @@ motion:
 # Minimal setup:
 motion:
   config:
-    on_picture_save: '/etc/motion/scripts/telegram.py %f "CAM: %t, Event: %v"'
+    on_picture_save: '/etc/motion/scripts/motion_bot.py %f "CAM: %t, event: %v, changed pixels: %D, width: %i, height: %J, X: %K, Y:%L, frame number: %q"'
   telegram:
     config:
       token: '99999999:KJNkjnksdkjsKJDNnskjndvkJSKJDNkjDSj'
       chat_id: '-999999999'
+
+# If need no need sent messages if somone near camera
+# (in range of wifi) bot can not send messages.
+# It based on SNMP server in router (in my case MerlinWRT) 
+# router share list of connected devices by SNMP
+# bot compare connected devices with known MAC list
+# and if at least one device from list in network
+# bot not send photo
+# To enable SNMP check add this:
+    snmp:
+      config:
+        oid: 'iso.3.6.1.2.1.3.1.1.2'
+        host: '192.168.1.1'
+      mac_list:
+        - '99:99:99:06:7F:99'
+
+# More config options in defaults.yaml
 
 
 #######################################################################################
