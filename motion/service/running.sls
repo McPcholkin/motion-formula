@@ -24,6 +24,8 @@ motion-daemon-enabled-file-managed:
       - '####################################'
       - '# File managed by Salt.'
       - '# Your changes will be overwritten.'
+      - '# '
+      - '# default: start_motion_daemon=no '
       - '####################################'
       - 'start_motion_daemon=yes'
     - require:

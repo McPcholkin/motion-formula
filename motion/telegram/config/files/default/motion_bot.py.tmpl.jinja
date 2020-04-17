@@ -1,0 +1,81 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+# Simple script to send photo + text if no known devices in network
+# Usage: ./motion_bot.py /tmp/some_photo.jpg "Some text"
+
+{% if snmp_host %}
+from snmp_check import get_mac_list
+{% endif %}
+from telegram_send import send_photo
+import sys # args support
+
+{% if snmp_host %}
+snmp_host = '{{ snmp_host }}'
+snmp_oid = '{{ snmp_oid }}'
+known_mac_list_file = '{{ known_mac_list_file }}'
+{% endif %}
+
+token = '{{ token }}'
+chat_id = '{{ chat_id }}'
+
+photo_path = sys.argv[1]
+photo_text = sys.argv[2]
+
+{% if snmp_host %}
+DEBUG = False
+
+# Get MAC list
+mac_list = get_mac_list(snmp_host, snmp_oid)
+
+if DEBUG:
+  print('mac_list')
+  print(mac_list)
+  print('')
+  
+
+with open(known_mac_list_file) as mac_list_file:
+
+  mac_counter = 0
+
+  for line in mac_list_file:
+    #preprocess line
+    line = line.strip().upper()
+    
+    if line in mac_list:
+      # All OK, MAC found, stop
+      
+      # Update counter
+      mac_counter = mac_counter + 1
+      
+      if DEBUG:
+        print('Known mac found - ', line)
+      
+      else:
+        # Stop if mac found
+        break
+        
+  # break here
+  if mac_counter == 0:
+    # MAC not found, send photo
+    
+    # Send photo
+    send_photo(photo_path, token, chat_id, photo_text)
+    
+    if DEBUG:
+      print('No known MAC found!')
+    
+  else:
+    # MAC found
+    
+    if DEBUG:
+      print('Founded ', mac_counter, ' MAC adreses')
+     
+    pass
+
+{% else %}
+
+# Send photo
+send_photo(photo_path, token, chat_id, photo_text)
+
+{% endif %}

@@ -1,0 +1,79 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+from pysnmp.hlapi import *
+
+DEBUG = False
+
+if DEBUG:
+  snmp_port = '161'
+  snmp_host = '192.168.1.1'
+  snmp_community = 'public'
+  snmp_oid = 'iso.3.6.1.2.1.3.1.1.2'
+
+
+def get_mac_list(host_ip, oid, community = '{{ snmp_community }}', host_port = '{{ snmp_port }}'):
+  # Accumulate values to list
+  mac_list = []
+  
+  for (errorIndication,
+       errorStatus,
+       errorIndex,
+       varBinds) in nextCmd(SnmpEngine(),
+                            CommunityData(community),
+                            UdpTransportTarget((host_ip, host_port)),
+                            ContextData(),
+                            ObjectType(ObjectIdentity(oid)),
+                            lexicographicMode=False):
+
+
+      
+      if errorIndication:
+        if DEBUG:
+          print(errorIndication)
+        break
+      elif errorStatus:
+        if DEBUG:
+          print('%s at %s' % (errorStatus.prettyPrint(),
+                            errorIndex and varBinds[int(errorIndex) - 1][0] or '?'))
+        break
+      else:
+      
+        # Read MAC list    
+        for varBind in varBinds:
+        
+          # Cleanup MAC from not needed parts
+          
+          # Cut all before '='
+          varBindValueFull = str(varBind).split('=')
+          varBindValueDirt = varBindValueFull[1]
+            
+          # Remove spaces 
+          varBindValueStr = varBindValueDirt.replace(' ', '')
+            
+          # Convert strinx back to hex
+          varBindValue = int(varBindValueStr, 16)
+            
+          # Cut '0x' from begin
+          varBindValueClean = '{0:012x}'.format(varBindValue)
+          
+          # To uppercase
+          varBindValueUpper = varBindValueClean.upper()
+            
+          # Add dots betwen each 2 symbols
+          varBindValueDotted = ':'.join(varBindValueUpper[i:i + 2] for i in range(0, 12, 2))
+           
+          # Add mac to list
+          mac_list.append(varBindValueDotted)
+          
+          if DEBUG:
+            # Dotted MAC
+            print(varBindValueDotted)
+            
+  # Return accumulated MAC list
+  return mac_list
+         
+if DEBUG:
+  mac_list = get_mac_list(snmp_host, snmp_oid)
+  print(mac_list)
+

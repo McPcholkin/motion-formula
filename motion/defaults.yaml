@@ -6,6 +6,7 @@ motion:
     name: 
       - 'motion'
       - 'v4l-utils'
+      - 'python3-pysnmp4'
   service:
     name: 'motion'
     user: 'motion'
@@ -19,6 +20,13 @@ motion:
   cameras: False
 
   telegram:
+    snmp:
+      mac_list: False
+      config:
+        host: False
+        oid: 'iso.3.6.1.2.1.3.1.1.2'   
+        community: 'public'
+        port: 161
     config:
       token: False
       chat_id: False
@@ -98,10 +106,10 @@ motion:
     text_double: 'off'
     #exif_text: '%i%J/%K%L'
     target_dir: '/srv/motion'
-    snapshot_filename: '%Y/%m/%d/%Y.%m.%d_%H-%M-%S-snapshot_event-%v'
-    picture_filename: '%Y/%m/%d/%Y.%m.%d_%H-%M-%S-%q_event-%v'
-    movie_filename: '%Y/%m/%d/%Y.%m.%d_%H-%M-%S_event-%v'
-    timelapse_filename: '%Y/%m/%d/%Y.%m.%d-timelapse'
+    snapshot_filename: '%Y/%m/%d/%Y-%m-%d_%H-%M-%S-snapshot_event-%v'
+    picture_filename: '%Y/%m/%d/%Y-%m-%d_%H-%M-%S-%q_event-%v'
+    movie_filename: '%Y/%m/%d/%Y-%m-%d_%H-%M-%S_event-%v'
+    timelapse_filename: '%Y/%m/%d/%Y-%m-%d-timelapse'
     ipv6_enabled: 'off'
     stream_port: '0'
     #substream_port: 8082

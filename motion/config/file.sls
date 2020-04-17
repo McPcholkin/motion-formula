@@ -47,7 +47,7 @@ motion-{{ camera.0 }}-config-file-file-managed:
     - mode: 644
     - user: root
     - group: root
-    - makedirs: False
+    - makedirs: True
     - template: jinja
     - require:
       - sls: {{ sls_package_install }}

@@ -1,0 +1,27 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+# Simple script to send photo + text
+
+import urllib.request   # for GET
+import requests         # for send keyboards and photos
+
+url_base = '{{ url_base }}'
+url_send_photo = '{{ url_send_photo }}'
+send_file_name = 'dummy.jpg'
+
+def send_photo(photo, token, chat_id, text = 'dummy', silent = False):
+  # open photo
+  fileobj = open(photo, 'rb')      
+
+  # assemble URL
+  send_photo_url = url_base + token + url_send_photo
+  
+  # assemble data
+  data = {"chat_id": chat_id, "disable_notification": silent, "caption": text}   
+
+  # send POST request
+  r = requests.post(send_photo_url, data, files={"photo": (send_file_name, fileobj)} )
+  
+  # close photo file
+  fileobj.close()                      
